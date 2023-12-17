@@ -1,4 +1,4 @@
-const { NotImplementedError } = require('../extensions/index.js');
+const { NotImplementedError } = require("../extensions/index.js");
 
 /**
  * In the popular Minesweeper game you have a board with some mines and those cells
@@ -23,11 +23,73 @@ const { NotImplementedError } = require('../extensions/index.js');
  *  [1, 1, 1]
  * ]
  */
-function minesweeper(/* matrix */) {
-  throw new NotImplementedError('Not implemented');
-  // remove line with error and write your code here
+function minesweeper(matrix) {
+  for (let i = 0; i < matrix.length; i++) {
+    for (let y = 0; y < matrix[i].length; y++) {
+      if (matrix[i][y] === true) {
+        matrix[i][y] = "mine";
+      }
+    }
+  }
+  for (let i = 0; i < matrix.length; i++) {
+    for (let y = 0; y < matrix[i].length; y++) {
+      let count = 0;
+      if (matrix[i][y] !== "mine") {
+        if (matrix[i - 1] !== undefined) {
+          if (matrix[i - 1][y] === "mine") {
+            count++;
+          }
+        }
+
+        if (matrix[i + 1] !== undefined) {
+          if (matrix[i + 1][y] === "mine") {
+            count++;
+          }
+        }
+        if (matrix[y - 1] !== undefined) {
+          if (matrix[i][y - 1] === "mine") {
+            count++;
+          }
+        }
+        if (matrix[y + 1] !== undefined) {
+          if (matrix[i][y + 1] === "mine") {
+            count++;
+          }
+        }
+        if (matrix[y - 1] !== undefined && matrix[i - 1] !== undefined) {
+          if (matrix[i - 1][y - 1] === "mine") {
+            count++;
+          }
+        }
+        if (matrix[y - 1] !== undefined && matrix[i + 1] !== undefined) {
+          if (matrix[i + 1][y - 1] === "mine") {
+            count++;
+          }
+        }
+        if (matrix[y + 1] !== undefined && matrix[i + 1] !== undefined) {
+          if (matrix[i + 1][y + 1] === "mine") {
+            count++;
+          }
+        }
+        if (matrix[y + 1] !== undefined && matrix[i - 1] !== undefined) {
+          if (matrix[i - 1][y + 1] === "mine") {
+            count++;
+          }
+        }
+        matrix[i][y] = count;
+      }
+    }
+  }
+  for (let i = 0; i < matrix.length; i++) {
+    for (let y = 0; y < matrix[i].length; y++) {
+      if (matrix[i][y] === "mine") {
+        matrix[i][y] = 1;
+      }
+    }
+  }
+  return matrix;
 }
 
 module.exports = {
-  minesweeper
+  minesweeper,
 };
